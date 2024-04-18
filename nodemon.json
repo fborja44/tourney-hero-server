@@ -1,0 +1,7 @@
+{
+	"watch": ["overlay", "auth", "server"],
+	"ext": "ts",
+	"execMap": {
+		"ts": "tsx"
+	}
+}

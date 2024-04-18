@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+#root {
+	box-sizing: border-box;
+	background: rgba(0, 0, 0, 0);
+	font-family: Montserrat, sans-serif;
+	color: white;
+	overflow: hidden;
+}
+
+html {
+	background: rgba(0, 0, 0, 0);
+	overflow: hidden;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+@keyframes snowAnim {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(calc(650vw / 19.2));
+	}
+}

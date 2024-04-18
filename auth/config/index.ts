@@ -1,0 +1,1 @@
+export const authFile = './auth/config/credentials.json';
