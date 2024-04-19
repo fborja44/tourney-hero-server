@@ -25,7 +25,11 @@ import JoiCommentators from '@common/validator/JoiCommentators.ts';
 import JoiBracket from '@common/validator/JoiBracket.ts';
 import JoiPlayerCard from '@common/validator/JoiPlayerCard.ts';
 import { initialData } from '@common/data/defaultData.ts';
-import { authenticateClient, getPassword, verifyCredentials } from '../auth/auth.ts';
+import {
+	authenticateClient,
+	getPassword,
+	verifyCredentials,
+} from '../auth/auth.ts';
 import JoiAuth from '@common/validator/JoiAuth.ts';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -235,7 +239,6 @@ io.on('connection', (socket: Socket) => {
 				io.to(socket.id).emit('dataError', result.error.message);
 				return;
 			}
-
 			data.playerCard = updatedPlayerCard;
 			// Broadcast to all but sender
 			socket.broadcast.emit('updateState', data);

@@ -95,4 +95,5 @@ export interface BracketData {
 export interface PlayerCardData {
 	showTeamLogo: boolean;
 	player: EntrantPlayerData;
+	character: Character;
 }

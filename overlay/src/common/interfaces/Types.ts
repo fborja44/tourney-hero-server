@@ -87,7 +87,6 @@ export interface EntrantPlayerData {
 	state: string;
 	twitter: string;
 	twitch: string;
-	character: Character;
 	seed: number;
 	matches: PlayerCardMatch[];
 	placements: PlayerCardPlacement[];

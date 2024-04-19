@@ -5,8 +5,15 @@ import { PrimaryGradient } from '@common/constants/styles';
 import { THEME_PRIMARY, THEME_SECONDARY } from '@common/constants/colors';
 import Ticker from '../Widgets/Ticker/Ticker';
 import { SiTwitch, SiTwitter } from 'react-icons/si';
-// import { useSelector } from 'react-redux';
-// import { AppState } from '../../redux/reducers/rootReducer';
+import {
+	Character,
+	PlayerCardMatch,
+	PlayerCardPlacement,
+} from '@common/interfaces/Types';
+import { useSelector } from 'react-redux';
+import { AppState } from '../../redux/reducers/rootReducer';
+import { getNumberSuffix } from '../../utils/string';
+import Fade, { FadeContainer } from '../Fade';
 
 const PlayerCardContainer = styled(OverlayContainer)`
 	flex-direction: column;
@@ -204,6 +211,11 @@ const DataBackground = styled.div`
 	flex: 1;
 `;
 
+const TournamentTitle = styled.div`
+	width: 100%;
+	text-overflow: ellipsis;
+`;
+
 const Placement = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -256,51 +268,87 @@ const TitleLogo = styled.img`
 	width: auto;
 `;
 
-const CharacterDisplay = () => {
+const Empty = styled.div`
+	font-weight: 300;
+	font-size: calc(32vw / 19.2);
+`;
+
+interface CharacterDisplayProps {
+	character: Character;
+}
+
+// TODO: Make image url into common function
+const CharacterDisplay = ({ character }: CharacterDisplayProps) => {
 	return (
 		<CharacterContainer>
-			<div className='label'>Mains</div>
-			<CharacterImage
-				src={`/assets/portraits/right/${encodeURIComponent('Falco')}.png`}
-				alt=''
-			/>
+			{/* <div className='label'>Mains</div> */}
+			<FadeContainer id={character}>
+				<CharacterImage
+					src={`/assets/portraits/right/${encodeURIComponent(character)}.png`}
+					alt=''
+				/>
+			</FadeContainer>
 		</CharacterContainer>
 	);
 };
 
-const TournamentResult = () => {
+interface TournamentResultProps {
+	placement: PlayerCardPlacement;
+}
+
+const TournamentResult = ({ placement }: TournamentResultProps) => {
 	return (
 		<DataBackground>
 			<Placement>
-				<span className='placement'>5</span>
-				<span className='suffix'>th</span>
+				<span className='placement'>{placement.placement}</span>
+				<span className='suffix'>{getNumberSuffix(placement.placement)}</span>
 			</Placement>
-			<TournamentLogo src='/assets/logos/logo.svg' alt='' />
-			<span className='title'>Tournament</span>
+			<TournamentLogo
+				src={placement.iconSrc || '/assets/logos/logo.svg'}
+				alt=''
+			/>
+			<TournamentTitle>{placement.name}</TournamentTitle>
 		</DataBackground>
 	);
 };
 
-const MatchResult = () => {
+interface MatchResultProps {
+	match: PlayerCardMatch;
+}
+
+const MatchResult = ({ match }: MatchResultProps) => {
 	return (
 		<MatchContainer>
 			<MatchPlayer>
-				<span className='score'>1</span>
-				<span className='tag'>Player</span>
+				<span className='score'>{match.player1Score}</span>
+				<span className='tag'>{match.player1Tag}</span>
 			</MatchPlayer>
 			<span className='vs'>vs</span>
 			<MatchPlayer>
-				<span className='tag'>Player</span>
-				<span className='score'>1</span>
+				<span className='tag'>{match.player2Tag}</span>
+				<span className='score'>{match.player2Score}</span>
 			</MatchPlayer>
 		</MatchContainer>
 	);
 };
 
 const PlayerCardPage = () => {
-	// const { showPhoto, playerTag } = useSelector(
-	// 	(state: AppState) => state.dataState.playerCard
-	// );
+	const playerCardData = useSelector(
+		(state: AppState) => state.dataState.playerCard
+	);
+
+	const {
+		tag,
+		team,
+		matches,
+		placements,
+		twitch,
+		twitter,
+		seed,
+		// state,
+		// country,
+		// pronoun,
+	} = playerCardData.player;
 
 	return (
 		<PlayerCardContainer>
@@ -308,9 +356,11 @@ const PlayerCardPage = () => {
 				<SectionContainer>
 					<SeedContainer>
 						<div className='title'>Seed</div>
-						<span className='seed'>1</span>
+						<span className='seed'>
+							<Fade>{seed}</Fade>
+						</span>
 					</SeedContainer>
-					<CharacterDisplay />
+					<CharacterDisplay character={playerCardData.character} />
 				</SectionContainer>
 				<SectionContainer style={{ flex: '1' }}>
 					<MainContainer>
@@ -321,35 +371,51 @@ const PlayerCardPage = () => {
 								<span>United States</span>
 							</LocationContainer>
 							<TagContainer>
-								<span className='team'>C9</span>{' '}
-								<span className='tag'>Mang0</span>
+								<span className='team'>{team}</span>{' '}
+								<span className='tag'>{tag}</span>
 							</TagContainer>
 							<SocialsContainer>
-								<div className='social'>
-									<SiTwitter className='icon' />
-									<span>C9Mang0</span>
-								</div>
-								<div className='social'>
-									<SiTwitch className='icon' />
-									<span>Mang0</span>
-								</div>
+								{twitter && (
+									<div className='social'>
+										<SiTwitter className='icon' />
+										<Fade>{twitter}</Fade>
+									</div>
+								)}
+								{twitch && (
+									<div className='social'>
+										<SiTwitch className='icon' />
+										<Fade>{twitter}</Fade>
+									</div>
+								)}
 							</SocialsContainer>
 						</MainHeader>
 						<Divider />
 						<MainContent>
 							<DataSection>
 								<SectionHeader>Results This Tournament</SectionHeader>
-								<MatchResult />
-								<MatchResult />
-								<MatchResult />
-								<MatchResult />
+								<FadeContainer
+									id={matches.map((match) => match.roundName).join('-')}
+								>
+									{matches.length ? (
+										matches.map((match) => <MatchResult match={match} />)
+									) : (
+										<Empty>(No Sets Played)</Empty>
+									)}
+								</FadeContainer>
 							</DataSection>
 							<DataSection>
 								<SectionHeader>Recent Placements</SectionHeader>
-								<TournamentResult />
-								<TournamentResult />
-								<TournamentResult />
-								<TournamentResult />
+								<FadeContainer
+									id={placements.map((placement) => placement.name).join('-')}
+								>
+									{placements.length ? (
+										placements.map((placement) => (
+											<TournamentResult placement={placement} />
+										))
+									) : (
+										<Empty>(No Tournament Data)</Empty>
+									)}
+								</FadeContainer>
 							</DataSection>
 						</MainContent>
 					</MainContainer>
