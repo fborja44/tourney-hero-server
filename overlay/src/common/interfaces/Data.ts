@@ -1,4 +1,4 @@
-import { Character, Port } from './Types.ts';
+import { Character, EntrantPlayerData, Port } from './Types.ts';
 
 export type Data =
 	| GameplayData
@@ -93,6 +93,6 @@ export interface BracketData {
 }
 
 export interface PlayerCardData {
-	showPhoto: boolean;
-	playerTag: string;
+	showTeamLogo: boolean;
+	player: EntrantPlayerData;
 }

@@ -64,6 +64,35 @@ export interface Player {
 	isWinner: boolean;
 }
 
+export interface PlayerCardMatch {
+	player1Tag: string;
+	player1Score: number;
+	player2Tag: string;
+	player2Score: number;
+	roundName: string;
+}
+
+export interface PlayerCardPlacement {
+	placement: number;
+	iconSrc: string;
+	name: string;
+}
+
+export interface EntrantPlayerData {
+	id: number;
+	team: string;
+	tag: string;
+	pronoun: string;
+	country: string;
+	state: string;
+	twitter: string;
+	twitch: string;
+	character: Character;
+	seed: number;
+	matches: PlayerCardMatch[];
+	placements: PlayerCardPlacement[];
+}
+
 export interface InputValidation {
 	status: 'error' | 'none' | 'success' | 'warning' | undefined;
 	message: string | undefined;
