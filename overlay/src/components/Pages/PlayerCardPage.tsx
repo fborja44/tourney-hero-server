@@ -12,7 +12,7 @@ import {
 } from '@common/interfaces/Types';
 import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/reducers/rootReducer';
-import { getNumberSuffix } from '../../utils/string';
+import { getNumberSuffix, trimNamePrefix } from '../../utils/string';
 import Fade, { FadeContainer } from '../Fade';
 
 const PlayerCardContainer = styled(OverlayContainer)`
@@ -111,7 +111,7 @@ const TeamLogo = styled.img`
 	height: auto;
 	right: calc(96vw / 19.2);
 	top: calc(64vw / 19.2);
-	opacity: 0.2;
+	opacity: 0.15;
 `;
 
 const MainHeader = styled.div`
@@ -180,6 +180,13 @@ const MainContent = styled.div`
 const DataSection = styled.div`
 	display: flex;
 	flex-direction: column;
+	gap: calc(8vw / 19.2);
+	flex: 1;
+`;
+
+const DataList = styled.div`
+	display: flex;
+	flex-direction: column;
 	gap: calc(16vw / 19.2);
 	flex: 1;
 `;
@@ -195,6 +202,7 @@ const Divider = styled.span`
 	width: 100%;
 	height: calc(1vw / 19.2);
 	background: ${THEME_PRIMARY};
+	opacity: 0.3;
 `;
 
 const DataBackground = styled.div`
@@ -208,12 +216,16 @@ const DataBackground = styled.div`
 	font-size: calc(36vw / 19.2);
 	font-weight: 400;
 	padding: 0 calc(32vw / 19.2);
-	flex: 1;
+	height: calc(82vw / 19.2);
 `;
 
 const TournamentTitle = styled.div`
-	width: 100%;
+	width: calc(100vw / 19.2);
+	overflow: none;
+	white-space: nowrap;
 	text-overflow: ellipsis;
+	font-weight: 500;
+		font-size: calc(32vw / 19.2);
 `;
 
 const Placement = styled.div`
@@ -223,32 +235,34 @@ const Placement = styled.div`
 
 	.placement {
 		font-weight: 600;
-		font-size: calc(48vw / 19.2);
+		font-size: calc(42vw / 19.2);
 	}
 
 	.suffix {
-		font-size: calc(30vw / 19.2);
+		font-size: calc(24vw / 19.2);
 	}
 `;
 
 const TournamentLogo = styled.img`
-	width: calc(64vw / 19.2);
-	height: calc(64vw / 19.2);
+	width: calc(60vw / 19.2);
+	height: calc(60vw / 19.2);
 	border-radius: calc(10vw / 19.2);
+	margin: 0 calc(4vw / 19.2);
 `;
 
 const MatchContainer = styled(DataBackground)`
 	justify-content: space-between;
+	align-items: center;
 
 	.tag {
 		font-weight: 500;
-		font-size: calc(36vw / 19.2);
+		font-size: calc(32vw / 19.2);
 	}
 
 	.score {
 		color: ${THEME_SECONDARY};
 		font-weight: 800;
-		font-size: calc(36vw / 19.2);
+		font-size: calc(42vw / 19.2);
 	}
 
 	.vs {
@@ -259,6 +273,7 @@ const MatchContainer = styled(DataBackground)`
 
 const MatchPlayer = styled.div`
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	flex: 1;
 `;
@@ -293,40 +308,53 @@ const CharacterDisplay = ({ character }: CharacterDisplayProps) => {
 };
 
 interface TournamentResultProps {
-	placement: PlayerCardPlacement;
+	tournament: PlayerCardPlacement;
 }
 
-const TournamentResult = ({ placement }: TournamentResultProps) => {
+const TournamentResult = ({ tournament }: TournamentResultProps) => {
+	const { name, placement, iconSrc } = tournament;
+
 	return (
 		<DataBackground>
 			<Placement>
-				<span className='placement'>{placement.placement}</span>
-				<span className='suffix'>{getNumberSuffix(placement.placement)}</span>
+				<span className='placement'>{placement}</span>
+				<span className='suffix'>{getNumberSuffix(placement)}</span>
 			</Placement>
-			<TournamentLogo
-				src={placement.iconSrc || '/assets/logos/logo.svg'}
-				alt=''
-			/>
-			<TournamentTitle>{placement.name}</TournamentTitle>
+			<TournamentLogo src={iconSrc || '/assets/logos/logo.svg'} alt='' />
+			<TournamentTitle>
+				{name.length > 25 ? `${name.slice(0, 28).trim()}...` : name}
+			</TournamentTitle>
 		</DataBackground>
 	);
 };
 
 interface MatchResultProps {
+	tag: string;
 	match: PlayerCardMatch;
 }
 
-const MatchResult = ({ match }: MatchResultProps) => {
+const MatchResult = ({ tag, match }: MatchResultProps) => {
+	const { player1Tag, player1Score, player2Tag, player2Score } = match;
+
+	const leftPlayer = {
+		tag: tag === player1Tag ? player1Tag : player2Tag,
+		score: tag === player1Tag ? player1Score : player2Score,
+	};
+	const rightPlayer = {
+		tag: tag === player1Tag ? player2Tag : player1Tag,
+		score: tag === player1Tag ? player2Score : player1Score,
+	};
+
 	return (
 		<MatchContainer>
 			<MatchPlayer>
-				<span className='score'>{match.player1Score}</span>
-				<span className='tag'>{match.player1Tag}</span>
+				<span className='score'>{leftPlayer.score}</span>
+				<span className='tag'>{trimNamePrefix(leftPlayer.tag)}</span>
 			</MatchPlayer>
 			<span className='vs'>vs</span>
 			<MatchPlayer>
-				<span className='tag'>{match.player2Tag}</span>
-				<span className='score'>{match.player2Score}</span>
+				<span className='tag'>{trimNamePrefix(rightPlayer.tag)}</span>
+				<span className='score'>{rightPlayer.score}</span>
 			</MatchPlayer>
 		</MatchContainer>
 	);
@@ -346,9 +374,9 @@ const PlayerCardPage = () => {
 		twitter,
 		seed,
 		// state,
-		// country,
-		// pronoun,
-	} = playerCardData.player;
+		country,
+		pronoun,
+	} = playerCardData;
 
 	return (
 		<PlayerCardContainer>
@@ -366,28 +394,36 @@ const PlayerCardPage = () => {
 					<MainContainer>
 						<TeamLogo src='/assets/logos/logo.svg' alt='' />
 						<MainHeader>
-							<LocationContainer>
-								<FlagImage src='/assets/flags/us.png' alt='' />
-								<span>United States</span>
-							</LocationContainer>
-							<TagContainer>
-								<span className='team'>{team}</span>{' '}
-								<span className='tag'>{tag}</span>
-							</TagContainer>
-							<SocialsContainer>
-								{twitter && (
-									<div className='social'>
-										<SiTwitter className='icon' />
-										<Fade>{twitter}</Fade>
-									</div>
-								)}
-								{twitch && (
-									<div className='social'>
-										<SiTwitch className='icon' />
-										<Fade>{twitter}</Fade>
-									</div>
-								)}
-							</SocialsContainer>
+							<FadeContainer id={country}>
+								<LocationContainer>
+									<FlagImage src='/assets/flags/us.png' alt='' />
+									{/* TODO: Flags */}
+									<span>{country}</span>
+								</LocationContainer>
+							</FadeContainer>
+							<FadeContainer id={`${team}-${tag}`}>
+								<TagContainer>
+									<span className='team'>{team}</span>{' '}
+									<span className='tag'>{tag}</span>
+								</TagContainer>
+							</FadeContainer>
+							<FadeContainer id={`${twitter}-${twitch}`}>
+								<SocialsContainer>
+									<div className='social'>{pronoun}</div>
+									{twitter && (
+										<div className='social'>
+											<SiTwitter className='icon' />
+											<span>{twitter}</span>
+										</div>
+									)}
+									{twitch && (
+										<div className='social'>
+											<SiTwitch className='icon' />
+											<span>{twitch}</span>
+										</div>
+									)}
+								</SocialsContainer>
+							</FadeContainer>
 						</MainHeader>
 						<Divider />
 						<MainContent>
@@ -395,26 +431,34 @@ const PlayerCardPage = () => {
 								<SectionHeader>Results This Tournament</SectionHeader>
 								<FadeContainer
 									id={matches.map((match) => match.roundName).join('-')}
+									style={{ display: 'flex', flex: '1' }}
 								>
-									{matches.length ? (
-										matches.map((match) => <MatchResult match={match} />)
-									) : (
-										<Empty>(No Sets Played)</Empty>
-									)}
+									<DataList>
+										{matches.length ? (
+											matches.map((match) => (
+												<MatchResult tag={tag} match={match} />
+											))
+										) : (
+											<Empty>(No Sets Played)</Empty>
+										)}
+									</DataList>
 								</FadeContainer>
 							</DataSection>
 							<DataSection>
 								<SectionHeader>Recent Placements</SectionHeader>
 								<FadeContainer
 									id={placements.map((placement) => placement.name).join('-')}
+									style={{ display: 'flex', flex: '1' }}
 								>
-									{placements.length ? (
-										placements.map((placement) => (
-											<TournamentResult placement={placement} />
-										))
-									) : (
-										<Empty>(No Tournament Data)</Empty>
-									)}
+									<DataList>
+										{placements.length ? (
+											placements.map((placement) => (
+												<TournamentResult tournament={placement} />
+											))
+										) : (
+											<Empty>(No Tournament Data)</Empty>
+										)}
+									</DataList>
 								</FadeContainer>
 							</DataSection>
 						</MainContent>

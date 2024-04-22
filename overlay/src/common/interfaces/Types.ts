@@ -78,20 +78,6 @@ export interface PlayerCardPlacement {
 	name: string;
 }
 
-export interface EntrantPlayerData {
-	id: number;
-	team: string;
-	tag: string;
-	pronoun: string;
-	country: string;
-	state: string;
-	twitter: string;
-	twitch: string;
-	seed: number;
-	matches: PlayerCardMatch[];
-	placements: PlayerCardPlacement[];
-}
-
 export interface InputValidation {
 	status: 'error' | 'none' | 'success' | 'warning' | undefined;
 	message: string | undefined;
