@@ -22,6 +22,7 @@ export const gameplayData: GameplayData = {
 		team: '',
 		port: 'Red',
 		pronoun: '',
+		countryCode: 'US',
 	},
 	player2: {
 		tag: 'Player 2',
@@ -31,6 +32,7 @@ export const gameplayData: GameplayData = {
 		team: '',
 		port: 'Blue',
 		pronoun: '',
+		countryCode: 'US',
 	},
 	showPlayerCamInfo: true,
 };
@@ -92,8 +94,8 @@ export const playerCardData: PlayerCardData = {
 	matches: [],
 	placements: [],
 	id: 0,
-	country: '',
-	state: '',
+	countryCode: 'US',
+	// stateCode: '',
 };
 
 export const initialData: OverlayData = {

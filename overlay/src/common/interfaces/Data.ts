@@ -50,6 +50,7 @@ export interface PlayerData {
 	team: string;
 	pronoun: string | null;
 	port: Port;
+	countryCode: string;
 }
 
 export interface CommentatorData {
@@ -104,8 +105,8 @@ export interface PlayerCardData {
 	character: Character;
 	tag: string;
 	pronoun: string;
-	country: string;
-	state: string;
+	countryCode: string;
+	// stateCode: string;
 	twitter: string;
 	twitch: string;
 	seed: number;

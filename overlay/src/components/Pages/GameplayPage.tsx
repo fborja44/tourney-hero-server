@@ -22,6 +22,7 @@ import Fade, { FadeContainer, Hide } from '../Fade';
 import { THEME_SECONDARY } from '@common/constants/colors';
 import InfoContainer from '../Widgets/InfoContainer/InfoContainer';
 import { SidedElement } from '@common/interfaces/Types';
+import Flag from '../Flag/Flag';
 
 interface CharacterContainerProps {
 	background: string;
@@ -170,11 +171,6 @@ const GameplayInfo = styled.div`
 	text-transform: uppercase;
 `;
 
-const FlagImage = styled.img`
-	height: calc(20vw / 19.2);
-	width: auto;
-`;
-
 const LeftContentContainer = styled(SideContentContainer)`
 	justify-content: center;
 	align-items: center;
@@ -240,38 +236,37 @@ const PlayerInfoSection = ({ playerData, side }: PlayerInfoSectionProps) => {
 		}
 	};
 
+	const { pronoun, tag, countryCode, character, team, score, port } = playerData;
+
 	return (
 		<PlayerContent>
 			<PlayerInfoTop side={side}>
-				<FadeContainer id={`${side}-${playerData.pronoun}-us.png`}>
+				<FadeContainer id={`${side}-${pronoun}-${countryCode}`}>
 					<InfoSection side={side}>
-						<FlagImage src={`/assets/flags/${encodeURIComponent('us.png')}`} />
-						{playerData.pronoun && <span>{playerData.pronoun}</span>}
+						<Flag code={countryCode} />
+						{pronoun && <span>{pronoun}</span>}
 					</InfoSection>
 				</FadeContainer>
-				<Ports port={playerData.port} colored={false} />
+				<Ports port={port} colored={false} />
 			</PlayerInfoTop>
 			<CharacterContainer background={getPortBackground()}>
-				<FadeContainer id={`${side}-${playerData.character}`}>
+				<FadeContainer id={`${side}-${character}`}>
 					<CharacterImage
 						src={`/assets/portraits/${side}/${encodeURIComponent(
-							playerData.character
+							character
 						)}.png`}
 						alt=''
 					/>
 				</FadeContainer>
 				<ScoreContainer side={side}>
-					<Fade>{playerData.score ?? ''}</Fade>
+					<Fade>{score ?? ''}</Fade>
 				</ScoreContainer>
 			</CharacterContainer>
 			<PlayerInfoBottom>
-				<FadeContainer
-					style={{ width: '100%' }}
-					id={`${side}-${playerData.team}-${playerData.tag}`}
-				>
+				<FadeContainer style={{ width: '100%' }} id={`${side}-${team}-${tag}`}>
 					<PlayerInfoBottomContent>
-						<span className='team'>{playerData.team}</span>
-						<span>{playerData.tag}</span>
+						<span className='team'>{team}</span>
+						<span>{tag}</span>
 					</PlayerInfoBottomContent>
 				</FadeContainer>
 			</PlayerInfoBottom>

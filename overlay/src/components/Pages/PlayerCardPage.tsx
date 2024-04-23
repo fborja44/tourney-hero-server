@@ -14,6 +14,8 @@ import { useSelector } from 'react-redux';
 import { AppState } from '../../redux/reducers/rootReducer';
 import { getNumberSuffix, trimNamePrefix } from '../../utils/string';
 import Fade, { FadeContainer } from '../Fade';
+import Flag from '../Flag/Flag';
+import { getCountryAlias } from '../../utils/location';
 
 const PlayerCardContainer = styled(OverlayContainer)`
 	flex-direction: column;
@@ -130,11 +132,6 @@ const LocationContainer = styled.div`
 	font-size: calc(32vw / 19.2);
 `;
 
-const FlagImage = styled.img`
-	height: calc(48vw / 19.2);
-	width: auto;
-`;
-
 const TagContainer = styled.div`
 	font-size: calc(112vw / 19.2);
 
@@ -225,7 +222,7 @@ const TournamentTitle = styled.div`
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	font-weight: 500;
-		font-size: calc(32vw / 19.2);
+	font-size: calc(32vw / 19.2);
 `;
 
 const Placement = styled.div`
@@ -374,7 +371,7 @@ const PlayerCardPage = () => {
 		twitter,
 		seed,
 		// state,
-		country,
+		countryCode,
 		pronoun,
 	} = playerCardData;
 
@@ -394,11 +391,10 @@ const PlayerCardPage = () => {
 					<MainContainer>
 						<TeamLogo src='/assets/logos/logo.svg' alt='' />
 						<MainHeader>
-							<FadeContainer id={country}>
+							<FadeContainer id={countryCode}>
 								<LocationContainer>
-									<FlagImage src='/assets/flags/us.png' alt='' />
-									{/* TODO: Flags */}
-									<span>{country}</span>
+									<Flag code={countryCode} height={36} />
+									<span>{getCountryAlias(countryCode)}</span>
 								</LocationContainer>
 							</FadeContainer>
 							<FadeContainer id={`${team}-${tag}`}>

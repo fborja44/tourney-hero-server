@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { JoiString, JoiTag } from '.';
+import { JoiLocationCode, JoiString, JoiTag } from '.';
 import {
 	MAX_BRACKET_DATA_LENGTH,
 	MAX_PRONOUN_LENGTH,
@@ -15,13 +15,13 @@ const JoiPlayerMatch = Joi.object({
 	player1Score: JoiScore,
 	player2Tag: JoiString(MAX_TAG_LENGTH).required(),
 	player2Score: JoiScore,
-	roundName: JoiString(MAX_BRACKET_DATA_LENGTH).required()
+	roundName: JoiString(MAX_BRACKET_DATA_LENGTH).required(),
 });
 
 const JoiPlayerPlacement = Joi.object({
 	placement: Joi.number().min(0).max(5000).required(),
 	iconSrc: JoiString(MAX_URL_LENGTH).required(),
-	name: JoiString(MAX_TOURNAMENT_NAME_LENGTH).required()
+	name: JoiString(MAX_TOURNAMENT_NAME_LENGTH).required(),
 });
 
 const JoiPlayerCard = Joi.object({
@@ -30,13 +30,13 @@ const JoiPlayerCard = Joi.object({
 	team: JoiString(MAX_TEAM_LENGTH).required(),
 	tag: JoiTag.required(),
 	pronoun: JoiString(MAX_PRONOUN_LENGTH).required(),
-	country: JoiString().required(),
-	state: JoiString().required(),
+	countryCode: JoiLocationCode.required(),
+	// stateCode: JoiLocationCode.required(),
 	twitter: JoiString().required(),
 	twitch: JoiString().required(),
 	seed: Joi.number().integer().min(0).max(5000).required(),
 	matches: Joi.array().min(0).max(4).items(JoiPlayerMatch).required(),
 	placements: Joi.array().min(0).max(4).items(JoiPlayerPlacement).required(),
-	character: JoiCharacter.required()
+	character: JoiCharacter.required(),
 }).required();
 export default JoiPlayerCard;
