@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { CHARACTERS, PORTS } from '../constants/data.ts';
-import { JoiString, JoiTag } from './index.ts';
+import { JoiLocationCode, JoiString, JoiTag } from './index.ts';
 import {
 	MAX_BRACKET_DATA_LENGTH,
 	MAX_PRONOUN_LENGTH,
@@ -38,6 +38,7 @@ export const JoiPlayer = Joi.object({
 	port: Joi.string()
 		.valid(...PORTS)
 		.required(),
+	countryCode: JoiLocationCode.required()
 }).required();
 
 const JoiGameplay = Joi.object({

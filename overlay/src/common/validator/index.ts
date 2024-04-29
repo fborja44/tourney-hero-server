@@ -6,3 +6,4 @@ export const JoiString = (maxLength: number = 32) => {
 	return Joi.string().max(maxLength).allow('').required();
 };
 export const JoiAlphanum = Joi.string().alphanum().required();
+export const JoiLocationCode = Joi.string().length(2).uppercase().required();
