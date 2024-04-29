@@ -1,7 +1,6 @@
 import JoiAuth from '@common/validator/JoiAuth.ts';
 import { authFile } from './config/index.ts';
 import bcrypt from 'bcrypt';
-import { NextFunction } from 'express';
 import fs from 'fs';
 import { Socket } from 'socket.io';
 import { socketLog } from '../server/utils/logger.ts';

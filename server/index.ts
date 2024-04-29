@@ -25,8 +25,7 @@ import JoiCommentators from '@common/validator/JoiCommentators.ts';
 import JoiBracket from '@common/validator/JoiBracket.ts';
 import JoiPlayerCard from '@common/validator/JoiPlayerCard.ts';
 import { initialData } from '@common/data/defaultData.ts';
-import { authenticateClient, getPassword, verifyCredentials } from '../auth/auth.ts';
-import JoiAuth from '@common/validator/JoiAuth.ts';
+import { authenticateClient, getPassword } from '../auth/auth.ts';
 import cors from 'cors';
 import helmet from 'helmet';
 import hpp from 'hpp';
@@ -85,7 +84,7 @@ app.use(express.static(path.join(__dirname, '../overlay/dist')));
 /**
  * Default data
  */
-let data: OverlayData = { ...initialData };
+const data: OverlayData = { ...initialData };
 
 /**
  * Auth middleware
