@@ -4,7 +4,9 @@ export type Data =
 	| GameplayData
 	| CommentatorData
 	| BracketData
-	| PlayerCardData;
+	| PlayerCardData
+	| ScoreData
+	| CharacterData;
 
 export interface OverlayData {
 	gameplay: GameplayData;

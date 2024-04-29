@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { JoiString, JoiTag } from '.';
+import { JoiLocationCode, JoiString, JoiTag } from '.';
 import {
 	MAX_BRACKET_DATA_LENGTH,
 	MAX_PRONOUN_LENGTH,
@@ -29,8 +29,8 @@ const JoiPlayerCardData = Joi.object({
 	team: JoiString(MAX_TEAM_LENGTH).required(),
 	tag: JoiTag.required(),
 	pronoun: JoiString(MAX_PRONOUN_LENGTH).required(),
-	country: JoiString().required(),
-	state: JoiString().required(),
+	country: JoiLocationCode.required(),
+	state: JoiLocationCode.required(),
 	twitter: JoiString().required(),
 	twitch: JoiString().required(),
 	character: JoiCharacter,
