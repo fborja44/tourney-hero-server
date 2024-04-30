@@ -1,4 +1,9 @@
-import { Character, PlayerCardMatch, PlayerCardPlacement, Port } from './Types.ts';
+import {
+	Character,
+	PlayerCardMatch,
+	PlayerCardPlacement,
+	Port,
+} from './Types.ts';
 
 export type Data =
 	| GameplayData

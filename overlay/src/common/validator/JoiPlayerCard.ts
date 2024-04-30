@@ -1,6 +1,5 @@
 import Joi from 'joi';
 import { JoiLocationCode, JoiString, JoiTag } from '.';
-import { JoiLocationCode, JoiString, JoiTag } from '.';
 import {
 	MAX_BRACKET_DATA_LENGTH,
 	MAX_PRONOUN_LENGTH,
