@@ -47,6 +47,7 @@ export interface PlayerData {
 	team: string;
 	pronoun: string | null;
 	port: Port;
+	countryCode: string;
 }
 
 export interface CommentatorData {

@@ -1,4 +1,5 @@
 import '../css/App.css';
+import '/node_modules/flag-icons/css/flag-icons.min.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { TickerPage } from './Pages/Frames/TickerFrame';
 import GameplayPage from './Pages/GameplayPage';
