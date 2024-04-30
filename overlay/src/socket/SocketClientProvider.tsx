@@ -35,18 +35,20 @@ export const SocketClientContext = createContext<SocketClientState>({
  * with the server
  */
 const SocketClientProvider = ({ children }: SocketClientProviderProps) => {
-	const [socket, setSocket] = useState<Socket | null>(null);
+	const [socketClient, setSocketClient] = useState<Socket | null>(null);
 	const [connected, setConnected] = useState<boolean>(false);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		console.log('Establishing connection to server...');
 		const socket = io(serverAddress, {
 			auth: {
 				perm: 'READ',
 			},
 		});
-		setSocket(socket);
-		setConnected(true);
+		socket.connect();
+		setSocketClient(socket);
+		setConnected(socket.connected);
 
 		// Event listeners
 		socket.on('connected', () => {
@@ -93,7 +95,7 @@ const SocketClientProvider = ({ children }: SocketClientProviderProps) => {
 
 	const socketClientState: SocketClientState = {
 		address: serverAddress,
-		socket: socket,
+		socket: socketClient,
 		connected: connected,
 	};
 

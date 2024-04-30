@@ -81,6 +81,7 @@ export const authenticateClient = async (socket: Socket, next: any) => {
 		return next();
 	}
 
+	// If write permissions, authenticate
 	try {
 		await verifyCredentials(password);
 		return next();

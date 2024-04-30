@@ -53,17 +53,9 @@ app.use(
 	helmet.contentSecurityPolicy({
 		directives: {
 			defaultSrc: ["'self'"],
-			styleSrc: [
-				"'self'",
-				"'unsafe-inline'",
-				'https://fonts.googleapis.com',
-			],
+			styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
 			fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-			connectSrc: [
-				"'self'",
-				'http://127.0.0.1:3001',
-				'ws://127.0.0.1:3001',
-			],
+			connectSrc: ["'self'", 'http://127.0.0.1:3001', 'ws://127.0.0.1:3001'],
 		},
 	})
 );

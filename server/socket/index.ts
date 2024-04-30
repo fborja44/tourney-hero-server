@@ -38,9 +38,7 @@ export const registerReadEvents = async (socket: Socket, next: any) => {
 	// Log connected client
 	socketLog(
 		socket,
-		`Client connected: ${
-			perm === 'READ' ? 'Read-Only' : `[id=${socket.id}]`
-		}`
+		`Client connected: ${perm === 'READ' ? 'Read-Only' : `[id=${socket.id}]`}`
 	);
 
 	// Send data to newly connected client
@@ -51,9 +49,7 @@ export const registerReadEvents = async (socket: Socket, next: any) => {
 		socketLog(socket, `Client disconnected`);
 	});
 
-	if (socket.handshake.auth.perm === 'WRITE') {
-		next();
-	}
+	next();
 };
 
 /**
@@ -63,6 +59,10 @@ export const registerReadEvents = async (socket: Socket, next: any) => {
  * @param next Next function
  */
 export const registerPrivilegedEvents = async (socket: Socket, next: any) => {
+	if (socket.handshake.auth.perm === 'WRITE') {
+		next();
+	}
+
 	// Data Events
 	socket.on('updateGameplay', (updatedGameplay: GameplayData) => {
 		return updateSocketData(
@@ -124,7 +124,7 @@ export const registerPrivilegedEvents = async (socket: Socket, next: any) => {
 		);
 	});
 
-    next();
+	next();
 };
 
 /**
@@ -143,17 +143,14 @@ export const updateSocketData = (
 	// Validate data
 	const result = validator.validate(updateData);
 	if (result.error) {
-		socketLog(
-			socket,
-			`${dataField} Data Error: ${result.error.message}`,
-			true
-		);
+		socketLog(socket, `${dataField} Data Error: ${result.error.message}`, true);
 		io.to(socket.id).emit('dataError', result.error.message);
 		return false;
 	}
 
+	const newData = updateFn(updateData);
 	// Broadcast to all but sender
-	socket.broadcast.emit('updateState', updateFn);
+	socket.broadcast.emit('updateState', newData);
 	// Send success message to sender
 	io.to(socket.id).emit('success', true);
 	socketLog(socket, `Updated ${dataField} Data`);
