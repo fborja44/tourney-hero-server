@@ -1,12 +1,12 @@
-import { OverlayContainerReverse } from '../../Containers/OverlayContainer';
+import OverlayContainer from '../../Containers/OverlayContainer';
 import Ticker from '../../Widgets/Ticker/Ticker';
 import { Frame } from './Frame';
 
 export const TickerPage = () => {
 	return (
-		<OverlayContainerReverse>
+		<OverlayContainer>
 			<Ticker noAnim />
-		</OverlayContainerReverse>
+		</OverlayContainer>
 	);
 };
 

@@ -81,8 +81,19 @@ export const bracketData: BracketData = {
 };
 
 export const playerCardData: PlayerCardData = {
-	showPhoto: true,
-	playerTag: 'Player',
+	showTeamLogo: true,
+	tag: 'Player 1',
+	character: 'Default',
+	team: '',
+	pronoun: '',
+	twitter: '',
+	twitch: '',
+	seed: 0,
+	matches: [],
+	placements: [],
+	id: 0,
+	countryCode: 'US'
+	// stateCode: ''
 };
 
 export const initialData: OverlayData = {

@@ -1,4 +1,4 @@
-import { Character, EntrantPlayerData, Port } from './Types.ts';
+import { Character, PlayerCardMatch, PlayerCardPlacement, Port } from './Types.ts';
 
 export type Data =
 	| GameplayData
@@ -96,5 +96,16 @@ export interface BracketData {
 
 export interface PlayerCardData {
 	showTeamLogo: boolean;
-	player: EntrantPlayerData;
+	id: number;
+	team: string;
+	character: Character;
+	tag: string;
+	pronoun: string;
+	countryCode: string;
+	// stateCode: string;
+	twitter: string;
+	twitch: string;
+	seed: number;
+	matches: PlayerCardMatch[];
+	placements: PlayerCardPlacement[];
 }
