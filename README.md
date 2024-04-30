@@ -1,6 +1,12 @@
 # Tourney Hero Stream Overlay and Server
 The companion overlay and server to be used with the Tourney Hero app.
 
+Connects to the companion [**Tourney Hero App**](https://github.com/fborja44/tourney-hero) to control overlay elements and to automate tasks.
+
+If you are a local Tournament Organizer with any requests, please feel free to send me a message.
+
+For an example tournament produced using this application, see: [Full House 2024](https://www.youtube.com/playlist?list=PLAa8C1sfSQUr8HkWqylXqtX1Ui28yVpDf)
+
 ## Usage
 ### Requirements
 - [Node 20+](https://nodejs.org/en)

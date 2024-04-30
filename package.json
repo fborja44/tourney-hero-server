@@ -1,6 +1,6 @@
 {
 	"name": "tourney-hero-server",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"description": "Stream interface and socket.io backend to be used with the Tourney Hero app.",
 	"main": "index.js",
 	"type": "module",

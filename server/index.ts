@@ -88,7 +88,7 @@ io.use(authenticateClient);
 io.use(registerReadEvents);
 io.use(registerPrivilegedEvents);
 
-// Serve react app
+// Serve React app
 app.get('*', (_req: Request, res: Response) => {
 	const appPath = path.join(__dirname, '../overlay/dist', 'index.html');
 	res.sendFile(appPath);
