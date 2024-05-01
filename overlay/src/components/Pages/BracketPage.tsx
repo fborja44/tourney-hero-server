@@ -47,6 +47,7 @@ const MatchBackground = styled.img`
 const PlayerContainer = styled.div`
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 	padding: 0 0 0 calc(36vw / 19.2);
 	flex: 1;
 	justify-content: space-between;
@@ -243,7 +244,6 @@ const SingleBracketMatch = ({ match, style }: BracketMatchProps) => {
 				tag={p1tag}
 				score={p1score}
 				winner={completed && p1score > p2score}
-				style={{ marginBottom: 'calc(1vw / 19.2)' }}
 				showScore={showScore}
 			/>
 			<MatchPlayer

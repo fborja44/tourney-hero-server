@@ -6,10 +6,15 @@ import { GameplayData } from '@common/interfaces/Data';
 import Ports from '../Ports/Ports';
 import { PrimaryGradient, ItemBackground } from '@common/constants/styles';
 import Fade, { FadeContainer } from '../Fade';
-import { DEFAULT_BACKGROUND, THEME_PRIMARY, THEME_SECONDARY } from '@common/constants/colors';
+import {
+	DEFAULT_BACKGROUND,
+	THEME_PRIMARY,
+	THEME_SECONDARY,
+} from '@common/constants/colors';
 import InfoContainer from '../Widgets/InfoContainer/InfoContainer';
 import CharacterIcon from '../CharacterIcon/CharacterIcon';
 import { SidedElement } from '@common/interfaces/Types';
+import Flag from '../Flag/Flag';
 
 const SidebarSection = styled.section`
 	display: flex;
@@ -176,14 +181,9 @@ const FlagContainer = styled.div`
 	justify-content: center;
 `;
 
-const FlagImage = styled.img`
-	height: calc(20vw / 19.2);
-	width: auto;
-`;
-
 const LogoImage = styled.img`
-	height: calc(70vw / 19.2);
-	width: auto;
+	height: auto;
+	width: calc(55vw / 19.2);
 `;
 
 interface GameplaySectionProps {
@@ -198,7 +198,7 @@ const GameplayInfoSection = ({
 	gameplayData,
 	side,
 }: PlayerInfoSectionProps) => {
-	const { team, tag, pronoun, character, score, port } =
+	const { team, tag, pronoun, character, score, port, countryCode } =
 		gameplayData[side === 'left' ? 'player1' : 'player2'];
 
 	return (
@@ -207,9 +207,7 @@ const GameplayInfoSection = ({
 				<PlayerInfoContent side={side}>
 					<FadeContainer id={`${side}-us.png`}>
 						<FlagContainer>
-							<FlagImage
-								src={`/assets/flags/${encodeURIComponent('us.png')}`}
-							/>
+							<Flag code={countryCode} />
 						</FlagContainer>
 					</FadeContainer>
 					<FadeContainer id={`${side}-${team}-${tag}-${character}`}>
@@ -230,7 +228,9 @@ const GameplayInfoSection = ({
 					<Ports port={port} colored={false} />
 					<Fade>{pronoun ?? ''}</Fade>
 				</div>
-				<Fade>{gameplayData.bracketName}</Fade>
+				<Fade>
+					{side === 'left' ? gameplayData.bracketName : gameplayData.roundName}
+				</Fade>
 			</PlayerInfoBottom>
 		</GameplayInfoContainer>
 	);
@@ -257,7 +257,7 @@ const GameplaySection = ({ gameplayData }: GameplaySectionProps) => {
 		<GameplayContainer>
 			<GameplayInfoSection gameplayData={gameplayData} side='left' />
 			<LogoContainer>
-				<LogoImage src='/assets/logos/logo.png' alt='' />
+				<LogoImage src='/assets/logos/logo.svg' alt='' />
 			</LogoContainer>
 			<GameplayInfoSection gameplayData={gameplayData} side='right' />
 		</GameplayContainer>
