@@ -23,6 +23,7 @@ import { THEME_SECONDARY } from '@common/constants/colors';
 import InfoContainer from '../Widgets/InfoContainer/InfoContainer';
 import { SidedElement } from '@common/interfaces/Types';
 import Flag from '../Flag/Flag';
+import CharacterPortrait from '../Character/CharacterPortrait';
 
 interface CharacterContainerProps {
 	background: string;
@@ -105,18 +106,6 @@ const CharacterContainer = styled.div<CharacterContainerProps>`
 	border-radius: calc(15vw / 19.2);
 	position: relative;
 	box-shadow: ${DropShadow};
-`;
-
-const CharacterImage = styled.img`
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: top;
-	top: 0;
-	left: 0;
-	z-index: 5;
-	border-radius: calc(15vw / 19.2);
 `;
 
 const ScoreContainer = styled.div<SidedElement>`
@@ -236,7 +225,8 @@ const PlayerInfoSection = ({ playerData, side }: PlayerInfoSectionProps) => {
 		}
 	};
 
-	const { pronoun, tag, countryCode, character, team, score, port } = playerData;
+	const { pronoun, tag, countryCode, characterId, team, score, port } =
+		playerData;
 
 	return (
 		<PlayerContent>
@@ -250,13 +240,8 @@ const PlayerInfoSection = ({ playerData, side }: PlayerInfoSectionProps) => {
 				<Ports port={port} colored={false} />
 			</PlayerInfoTop>
 			<CharacterContainer background={getPortBackground()}>
-				<FadeContainer id={`${side}-${character}`}>
-					<CharacterImage
-						src={`/assets/portraits/${side}/${encodeURIComponent(
-							character
-						)}.png`}
-						alt=''
-					/>
+				<FadeContainer id={`${side}-${characterId}`}>
+					<CharacterPortrait characterId={characterId} side={side} />
 				</FadeContainer>
 				<ScoreContainer side={side}>
 					<Fade>{score ?? ''}</Fade>

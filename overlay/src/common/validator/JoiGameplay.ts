@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { CHARACTERS, PORTS } from '../constants/data.ts';
+import { PORTS } from '../constants/data.ts';
 import { JoiLocationCode, JoiString, JoiTag } from './index.ts';
 import {
 	MAX_BRACKET_DATA_LENGTH,
@@ -19,26 +19,26 @@ export const JoiScores = Joi.object({
 	p2score: JoiScore.required(),
 }).required();
 
-export const JoiCharacter = Joi.string()
-	.valid(...CHARACTERS)
+export const JoiCharacter = Joi.allow(Joi.number().min(0).max(26).integer())
+	.allow(null)
 	.required();
 
 export const JoiCharacters = Joi.object({
-	p1character: JoiCharacter.required(),
-	p2character: JoiCharacter.required(),
+	p1characterId: JoiCharacter.required(),
+	p2characterId: JoiCharacter.required(),
 }).required();
 
 export const JoiPlayer = Joi.object({
 	tag: JoiTag.required(),
 	tagDisplaySize: Joi.number().min(1).max(MAX_SCORE).required(),
 	score: JoiScore.required(),
-	character: JoiCharacter,
+	characterId: JoiCharacter,
 	team: JoiString(MAX_TEAM_LENGTH).required(),
 	pronoun: JoiString(MAX_PRONOUN_LENGTH).required(),
 	port: Joi.string()
 		.valid(...PORTS)
 		.required(),
-	countryCode: JoiLocationCode.required()
+	countryCode: JoiLocationCode.required(),
 }).required();
 
 const JoiGameplay = Joi.object({

@@ -18,7 +18,7 @@ export const gameplayData: GameplayData = {
 		tag: 'Player 1',
 		tagDisplaySize: 32,
 		score: 0,
-		character: 'Default',
+		characterId: null,
 		team: '',
 		port: 'Red',
 		pronoun: '',
@@ -28,7 +28,7 @@ export const gameplayData: GameplayData = {
 		tag: 'Player 2',
 		tagDisplaySize: 32,
 		score: 0,
-		character: 'Default',
+		characterId: null,
 		team: '',
 		port: 'Blue',
 		pronoun: '',
@@ -85,7 +85,7 @@ export const bracketData: BracketData = {
 export const playerCardData: PlayerCardData = {
 	showTeamLogo: true,
 	tag: 'Player 1',
-	character: 'Default',
+	characterId: null,
 	team: '',
 	pronoun: '',
 	twitter: '',
@@ -94,7 +94,7 @@ export const playerCardData: PlayerCardData = {
 	matches: [],
 	placements: [],
 	id: 0,
-	countryCode: 'US'
+	countryCode: 'US',
 	// stateCode: ''
 };
 

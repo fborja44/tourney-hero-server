@@ -6,7 +6,7 @@ import { THEME_PRIMARY, THEME_SECONDARY } from '@common/constants/colors';
 import Ticker from '../Widgets/Ticker/Ticker';
 import { SiTwitch, SiTwitter } from 'react-icons/si';
 import {
-	Character,
+	CharacterId,
 	PlayerCardMatch,
 	PlayerCardPlacement,
 } from '@common/interfaces/Types';
@@ -16,6 +16,7 @@ import { getNumberSuffix, trimNamePrefix } from '../../utils/string';
 import Fade, { FadeContainer } from '../Fade';
 import Flag from '../Flag/Flag';
 import { getCountryAlias } from '../../utils/location';
+import CharacterPortrait from '../Character/CharacterPortrait';
 
 const PlayerCardContainer = styled(OverlayContainer)`
 	flex-direction: column;
@@ -78,17 +79,6 @@ const CharacterContainer = styled(InfoContainer)`
 		font-weight: 300;
 		z-index: 5;
 	}
-`;
-
-const CharacterImage = styled.img`
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: bottom top;
-	bottom: 0;
-	left: 0;
-	border-radius: calc(15vw / 19.2);
 `;
 
 const MainContainer = styled(InfoContainer)`
@@ -286,19 +276,16 @@ const Empty = styled.div`
 `;
 
 interface CharacterDisplayProps {
-	character: Character;
+	characterId: CharacterId;
 }
 
 // TODO: Make image url into common function
-const CharacterDisplay = ({ character }: CharacterDisplayProps) => {
+const CharacterDisplay = ({ characterId }: CharacterDisplayProps) => {
 	return (
 		<CharacterContainer>
 			{/* <div className='label'>Mains</div> */}
-			<FadeContainer id={character}>
-				<CharacterImage
-					src={`/assets/portraits/right/${encodeURIComponent(character)}.png`}
-					alt=''
-				/>
+			<FadeContainer id={characterId?.toString() ?? 'Default'}>
+				<CharacterPortrait characterId={characterId} />
 			</FadeContainer>
 		</CharacterContainer>
 	);
@@ -385,7 +372,7 @@ const PlayerCardPage = () => {
 							<Fade>{seed}</Fade>
 						</span>
 					</SeedContainer>
-					<CharacterDisplay character={playerCardData.character} />
+					<CharacterDisplay characterId={playerCardData.characterId} />
 				</SectionContainer>
 				<SectionContainer style={{ flex: '1' }}>
 					<MainContainer>

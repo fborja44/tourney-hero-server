@@ -5,6 +5,8 @@ export interface User {
 
 export type Port = 'Red' | 'Blue' | 'Yellow' | 'Green' | 'None';
 
+export type CharacterId = number | null;
+
 export type Character =
 	| 'Bowser'
 	| 'CaptainFalcon'

@@ -12,7 +12,7 @@ import {
 	THEME_SECONDARY,
 } from '@common/constants/colors';
 import InfoContainer from '../Widgets/InfoContainer/InfoContainer';
-import CharacterIcon from '../CharacterIcon/CharacterIcon';
+import CharacterIcon from '../Character/CharacterIcon';
 import { SidedElement } from '@common/interfaces/Types';
 import Flag from '../Flag/Flag';
 
@@ -198,7 +198,7 @@ const GameplayInfoSection = ({
 	gameplayData,
 	side,
 }: PlayerInfoSectionProps) => {
-	const { team, tag, pronoun, character, score, port, countryCode } =
+	const { team, tag, pronoun, characterId, score, port, countryCode } =
 		gameplayData[side === 'left' ? 'player1' : 'player2'];
 
 	return (
@@ -210,14 +210,14 @@ const GameplayInfoSection = ({
 							<Flag code={countryCode} />
 						</FlagContainer>
 					</FadeContainer>
-					<FadeContainer id={`${side}-${team}-${tag}-${character}`}>
+					<FadeContainer id={`${side}-${team}-${tag}-${characterId}`}>
 						<PlayerInfo>
-							{side === 'right' && <CharacterIcon character={character} />}
+							{side === 'right' && <CharacterIcon characterId={characterId} />}
 							<PlayerTag>
 								{team && <span className='team'>{team}</span>}
 								<span>{tag}</span>
 							</PlayerTag>
-							{side === 'left' && <CharacterIcon character={character} />}
+							{side === 'left' && <CharacterIcon characterId={characterId} />}
 						</PlayerInfo>
 					</FadeContainer>
 				</PlayerInfoContent>

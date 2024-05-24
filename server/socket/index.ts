@@ -188,11 +188,11 @@ export const updateCharactersData = (
 		...data.gameplay,
 		player1: {
 			...data.gameplay.player1,
-			character: updatedCharacters.p1character,
+			characterId: updatedCharacters.p1characterId,
 		},
 		player2: {
 			...data.gameplay.player2,
-			character: updatedCharacters.p2character,
+			characterId: updatedCharacters.p2characterId,
 		},
 	};
 	return data;
