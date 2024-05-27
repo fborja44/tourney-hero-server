@@ -9,13 +9,13 @@ export type CharacterId = number | null;
 
 export type Character =
 	| 'Bowser'
-	| 'CaptainFalcon'
-	| 'DonkeyKong'
-	| 'DrMario'
+	| 'Captain Falcon'
+	| 'Donkey Kong'
+	| 'Dr. Mario'
 	| 'Falco'
 	| 'Fox'
 	| 'Ganondorf'
-	| 'IceClimbers'
+	| 'Ice Climbers'
 	| 'Jigglypuff'
 	| 'Kirby'
 	| 'Link'
@@ -23,7 +23,7 @@ export type Character =
 	| 'Mario'
 	| 'Marth'
 	| 'Mewtwo'
-	| 'MrGameWatch'
+	| 'Mr. Game & Watch'
 	| 'Ness'
 	| 'Peach'
 	| 'Pichu'
@@ -32,9 +32,10 @@ export type Character =
 	| 'Samus'
 	| 'Sheik'
 	| 'Yoshi'
-	| 'YoungLink'
+	| 'Young Link'
 	| 'Zelda'
 	| 'Default';
+
 
 export interface Tournament {
 	name: string;

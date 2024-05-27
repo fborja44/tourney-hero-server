@@ -7,6 +7,7 @@ import {
 	OverlayData,
 	PlayerCardData,
 	ScoreData,
+	StatsData,
 } from '@common/interfaces/Data.ts';
 import { Socket } from 'socket.io';
 import { ObjectSchema } from 'joi';
@@ -20,6 +21,7 @@ import JoiCommentators from '@common/validator/JoiCommentators.ts';
 import JoiBracket from '@common/validator/JoiBracket.ts';
 import JoiPlayerCard from '@common/validator/JoiPlayerCard.ts';
 import { io } from '../index.ts';
+import JoiStats from '@common/validator/JoiStats.ts';
 
 /**
  * In-memory data store for socket server
@@ -124,6 +126,16 @@ export const registerPrivilegedEvents = async (socket: Socket, next: any) => {
 		);
 	});
 
+	socket.on('updateStatistics', (updatedStats: StatsData) => {
+		return updateSocketData(
+			'Statistics',
+			updatedStats,
+			() => updateStatsData(updatedStats),
+			JoiStats,
+			socket
+		);
+	});
+
 	next();
 };
 
@@ -144,6 +156,7 @@ export const updateSocketData = (
 	const result = validator.validate(updateData);
 	if (result.error) {
 		socketLog(socket, `${dataField} Data Error: ${result.error.message}`, true);
+		console.error(result.error);
 		io.to(socket.id).emit('dataError', result.error.message);
 		return false;
 	}
@@ -214,5 +227,10 @@ export const updatePlayerCardData = (
 	updatedPlayerCard: PlayerCardData
 ): OverlayData => {
 	data.playerCard = updatedPlayerCard;
+	return data;
+};
+
+export const updateStatsData = (updatedStats: StatsData): OverlayData => {
+	data.statistics = updatedStats;
 	return data;
 };

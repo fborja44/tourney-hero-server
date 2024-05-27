@@ -5,6 +5,7 @@ import {
 	GameplayData,
 	PlayerCardData,
 	PlayerData,
+	StatsData,
 } from '@common/interfaces/Data.ts';
 
 export const updateGameplay = createAction(
@@ -48,6 +49,15 @@ export const updatePlayerCard = createAction(
 	(updatedPlayerCard: Partial<PlayerCardData>) => {
 		return {
 			payload: updatedPlayerCard,
+		};
+	}
+);
+
+export const updateStats = createAction(
+	'UPDATE_STATS',
+	(updatedStats: StatsData) => {
+		return {
+			payload: updatedStats,
 		};
 	}
 );

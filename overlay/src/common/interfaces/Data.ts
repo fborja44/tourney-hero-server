@@ -10,6 +10,7 @@ export type Data =
 	| CommentatorData
 	| BracketData
 	| PlayerCardData
+	| StatsData
 	| ScoreData
 	| CharacterData;
 
@@ -18,6 +19,7 @@ export interface OverlayData {
 	commentators: CommentatorData;
 	bracket: BracketData;
 	playerCard: PlayerCardData;
+	statistics: StatsData;
 }
 
 export type AutomationData = ScoreData | CharacterData;
@@ -114,4 +116,9 @@ export interface PlayerCardData {
 	seed: number;
 	matches: PlayerCardMatch[];
 	placements: PlayerCardPlacement[];
+}
+
+export interface StatsData {
+	player1: PlayerData;
+	player2: PlayerData;
 }
