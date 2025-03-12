@@ -4,27 +4,20 @@ interface FlagImageProps {
 	height: number;
 }
 
-const FlagImg = styled.img<FlagImageProps>`
+const FlagSpan = styled.span<FlagImageProps>`
 	height: calc(${(props) => props.height}vw / 19.2);
-	width: auto;
+	width: calc(${(props) => props.height}vw / 19.2);
 `;
 
 interface FlagProps {
 	code: string;
-	height: number;
+	height?: number;
 }
 
-const Flag = ({ code, height }: FlagProps) => {
-	return (
-		<FlagImg
-			src={`node_modules/flag-icons/flags/4x3/${code.toUpperCase()}.svg`}
-			height={height}
-		/>
-	);
-};
+const Flag = ({ code, height = 32 }: FlagProps) => {
+	const className = `fi fi-${code.toLowerCase()}`;
 
-Flag.defaultProps = {
-	height: 24,
+	return <FlagSpan className={className} height={height}></FlagSpan>;
 };
 
 export default Flag;
